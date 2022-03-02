@@ -7,7 +7,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent implements OnInit {
-  @ViewChild('signupForm') form: NgForm;
+  @ViewChild('signinForm') form: NgForm;
   constructor() { }
 
   ngOnInit(): void {
