@@ -1,0 +1,12 @@
+<div class="row" *ngIf="users.length <= 0">
+  <h3>Loading!</h3>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <app-user-item
+    *ngFor="let userItem of users; let i = index"
+    [user]="userItem"
+    [index]="i">
+    </app-user-item>
+  </div>
+</div>

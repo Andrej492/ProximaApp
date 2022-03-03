@@ -1,5 +1,6 @@
 import { NgForm } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -9,13 +10,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class SignupComponent implements OnInit {
   @ViewChild('signupForm') form: NgForm;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-
+    const email = this.form.value.email;
+    const password = this.form.value.password;
+    console.log( email + ' ' + password);
+    this.authService.signupUser(email, password);
   }
-
 }
