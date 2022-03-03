@@ -27,9 +27,7 @@ export class SigninComponent implements OnInit, OnDestroy {
     const email = this.form.value.email;
     const password = this.form.value.password;
     this.authService.signinUser(email, password);
-    if(this.isAuthenticated) {
-      this.router.navigate(['home']);
-    }
+    this.router.navigate(['home']);
   }
 
   ngOnDestroy(): void {

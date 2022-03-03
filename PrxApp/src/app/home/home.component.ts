@@ -9,7 +9,7 @@ import { User } from '../user/user.model';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  isAuthenticated = false;
+  isAuthenticated: boolean;
   logSub: Subscription;
 
   constructor(private authService: AuthService) { }
