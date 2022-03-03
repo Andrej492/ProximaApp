@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import { User } from "./user.model";
 import * as $ from 'jquery';
 
@@ -8,11 +8,17 @@ export class AuthService {
   private users: User[] = [];
   user: User;
   usersChanged: Subject<User[]> = new Subject<User[]>();
-  apiUrl = 'https://regres.in/users';
+  isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  tokenFromLogin: Subject<string> = new Subject<string>();
 
   constructor() {}
-  getUsers() {
-    fetch('https://reqres.in/api/users?page=2')
+
+  getUsers(token: string) {
+    fetch('https://reqres.in/api/users?page=2', {
+      headers: new Headers({
+        'Authorization': token
+      })
+    })
     .then(response => response.json())
     .then(res => {
       this.users = res.data;
@@ -27,24 +33,32 @@ export class AuthService {
     return userReturn;
   }
 
-  signinUser(email: string, password: string) {}
+  signinUser(email: string, password: string) {
+    let data = {
+      email: email,
+      password: password
+    };
+    fetch('https://reqres.in/api/login', {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      headers: new Headers({
+        'Content-Type': 'application/json; charset=UTF-8'
+      }),
+      body: JSON.stringify(data)
+      }
+    )
+    .then(response => response.json())
+    .then(data => {
+      this.tokenFromLogin.next(data);
+      this.isLogged.next(true);
+      console.log('Success:');
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
 
-  // signupUser(email: string, password: string) {
-  //   const userData = new FormData();
-  //   userData.append("password", password);
-  //   userData.append("email", email);
-  //   this.http.post<User>(
-  //     'https://reqres.in/api/register',
-  //     userData
-  //   ).subscribe( result => {
-  //     console.log(result);
-  //     let userNew: User = result;
-  //     this.users.push(userNew);
-  //     this.usersChanged.next([...this.users]);
-  //     console.log(this.users);
-  //   }
-  //   );
-  // }
   signupUser(email: string, password: string) {
     let data = {
       email: email,
@@ -62,6 +76,8 @@ export class AuthService {
     )
     .then(response => response.json())
     .then(data => {
+      const token = data.token;
+      console.log(token);
       console.log('Success:', data);
     })
     .catch((error) => {
