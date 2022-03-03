@@ -13,8 +13,8 @@ export class AuthService {
 
   constructor() {}
 
-  getUsers(token: string) {
-    fetch('https://reqres.in/api/users?page=2', {
+  getUsers(token: string): Promise<User[]> {
+    return fetch('https://reqres.in/api/users?page=2', {
       headers: new Headers({
         'Authorization': token
       })
@@ -23,8 +23,12 @@ export class AuthService {
     .then(res => {
       this.users = res.data;
       this.usersChanged.next([...this.users]);
+      return this.users;
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+      return err;
+    });
   }
 
   getUser(index: number): User {
@@ -33,55 +37,77 @@ export class AuthService {
     return userReturn;
   }
 
-  signinUser(email: string, password: string) {
-    let data = {
-      email: email,
-      password: password
-    };
-    fetch('https://reqres.in/api/login', {
+  signinUser(email: string, password: string): Promise<string> {
+    return fetch('https://reqres.in/api/login', {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8'
       }),
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
       }
     )
-    .then(response => response.json())
+    .then(response =>
+      response.json()
+    )
     .then(data => {
-      this.tokenFromLogin.next(data);
-      this.isLogged.next(true);
-      console.log('Success:');
+      console.log(data);
+      let str: string = data;
+      this.tokenFromLogin.next(str);
+      this.isLogged.next(this.hasDigitInString(str));
+      return str;
     })
     .catch((error) => {
       console.error('Error:', error);
+      return error;
     });
   }
 
-  signupUser(email: string, password: string) {
-    let data = {
-      email: email,
-      password: password
-    };
-    fetch('https://reqres.in/api/register', {
+  signupUser(email: string, password: string): Promise<string> {
+    return fetch('https://reqres.in/api/register', {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8'
       }),
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
       }
     )
     .then(response => response.json())
     .then(data => {
-      const token = data.token;
-      console.log(token);
-      console.log('Success:', data);
+      const token: string = data.token;
+      this.tokenFromLogin.next(token);
+      this.isLogged.next(this.hasDigitInString(token));
+      return token;
     })
     .catch((error) => {
       console.error('Error:', error);
+      return error;
     });
+  }
+
+  hasDigitInString(input): boolean{
+    let str = input;
+    let result: boolean;
+    let br: number = 0;
+    for( let i = 0; i < str.length; i++){
+        if(!isNaN(str.charAt(i)) && !(str.charAt(i) === " ")){
+            br++;
+        }
+    }
+    if(br > 0) {
+      result = false;
+    } else {
+      result = true;
+    }
+    return result;
   }
 }

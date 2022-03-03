@@ -11,6 +11,7 @@ import { User } from 'src/app/user/user.model';
 export class UserListComponent implements OnInit, OnDestroy {
   getUsersSub: Subscription;
   users: User[] = [];
+  isLoading;
   token: string = '';
   tokenSub: Subscription;
   isAuthenticated = false;
@@ -21,12 +22,14 @@ export class UserListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.tokenSub = this.authService.tokenFromLogin.subscribe(token => {
       this.token = token;
-      this.authService.getUsers(token);
-    })
-    this.getUsersSub = this.authService.usersChanged.subscribe(res => {
-      this.users = res;
-      console.log(this.users);
+      console.log(this.token);
     });
+
+    this.authService.getUsers(this.token).then((result: User[]) => {
+      this.isLoading = true;
+      this.users = result;
+      this.isLoading = false;
+    })
     this.logSub = this.authService.isLogged.subscribe(loginRes => {
       this.isAuthenticated = loginRes;
     });

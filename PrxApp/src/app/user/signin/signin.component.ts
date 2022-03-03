@@ -12,25 +12,31 @@ import { Subscription } from 'rxjs';
 })
 export class SigninComponent implements OnInit, OnDestroy {
   @ViewChild('signinForm') form: NgForm;
-  isAuthenticated = false;
+  token: string;
+  isLoggedIn: boolean;
   logSub: Subscription;
 
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    this.logSub = this.authService.isLogged.subscribe(loginRes => {
-      this.isAuthenticated = loginRes;
-    });
+    this.logSub = this.authService.isLogged.subscribe(res => this.isLoggedIn = res);
   }
 
   onSubmit() {
     const email = this.form.value.email;
     const password = this.form.value.password;
-    this.authService.signinUser(email, password);
-    this.router.navigate(['home']);
+    this.authService.signinUser(email, password).then( (data: string) => {
+      this.token = data;
+      console.log(this.token);
+      const res = this.authService.hasDigitInString(this.token);
+      console.log(res);
+      if(this.isLoggedIn) {
+        this.router.navigate(['/home']);
+      }
+    });
   }
 
   ngOnDestroy(): void {
-    this.logSub.unsubscribe();
-}
+      this.logSub.unsubscribe();
+  }
 }
