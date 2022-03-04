@@ -1,9 +1,9 @@
-<div class="row" *ngIf="users.length <= 0">
+<div class="row" *ngIf="users.length <= 0 || isLoading">
   <h3>Loading!</h3>
 </div>
 <br>
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-xs-12" *ngIf="users.length > 0 && !isLoading && hasLoadedToken">
     <app-user-item
     *ngFor="let userItem of users; let i = index"
     [user]="userItem"

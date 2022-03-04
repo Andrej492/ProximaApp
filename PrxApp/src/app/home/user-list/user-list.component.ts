@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
 import { User } from 'src/app/user/user.model';
@@ -11,25 +11,29 @@ import { User } from 'src/app/user/user.model';
 export class UserListComponent implements OnInit, OnDestroy {
   getUsersSub: Subscription;
   users: User[] = [];
-  isLoading;
-  token: string = '';
+  isLoading: boolean;
+  token: string;
   tokenSub: Subscription;
   isAuthenticated = false;
   logSub: Subscription;
+  hasLoadedToken: boolean;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.tokenSub = this.authService.tokenFromLogin.subscribe(token => {
+    this.tokenSub = this.authService.tokenFromLogin.subscribe((token: string) => {
+      this.hasLoadedToken = false;
       this.token = token;
-      console.log(this.token);
+      this.hasLoadedToken = true;
+      this.authService.getUsers(this.token)
+      .then((result: User[]) => {
+        this.isLoading = true;
+        this.users = result;
+        this.isLoading = false;
+      })
+      .catch(err => console.log(err));
     });
 
-    this.authService.getUsers(this.token).then((result: User[]) => {
-      this.isLoading = true;
-      this.users = result;
-      this.isLoading = false;
-    })
     this.logSub = this.authService.isLogged.subscribe(loginRes => {
       this.isAuthenticated = loginRes;
     });
@@ -37,8 +41,8 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
       this.getUsersSub.unsubscribe();
-      this.tokenSub.unsubscribe();
       this.logSub.unsubscribe();
+      this.tokenSub.unsubscribe();
   }
 
 }

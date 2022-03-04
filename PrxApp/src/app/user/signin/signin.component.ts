@@ -27,9 +27,7 @@ export class SigninComponent implements OnInit, OnDestroy {
     const password = this.form.value.password;
     this.authService.signinUser(email, password).then( (data: string) => {
       this.token = data;
-      console.log(this.token);
-      const res = this.authService.hasDigitInString(this.token);
-      console.log(res);
+      this.authService.tokenFromLogin.next(this.token);
       if(this.isLoggedIn) {
         this.router.navigate(['/home']);
       }

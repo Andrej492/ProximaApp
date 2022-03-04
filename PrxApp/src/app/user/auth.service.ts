@@ -9,14 +9,17 @@ export class AuthService {
   user: User;
   usersChanged: Subject<User[]> = new Subject<User[]>();
   isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  tokenFromLogin: Subject<string> = new Subject<string>();
+  tokenFromLogin: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   constructor() {}
 
   getUsers(token: string): Promise<User[]> {
     return fetch('https://reqres.in/api/users?page=2', {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache',
       headers: new Headers({
-        'Authorization': token
+        'Authorization': `${token}`,
       })
     })
     .then(response => response.json())
@@ -55,9 +58,8 @@ export class AuthService {
       response.json()
     )
     .then(data => {
-      console.log(data);
-      let str: string = data;
-      this.tokenFromLogin.next(str);
+      let str: string = '';
+      str = data.token;
       this.isLogged.next(this.hasDigitInString(str));
       return str;
     })
@@ -83,8 +85,8 @@ export class AuthService {
     )
     .then(response => response.json())
     .then(data => {
-      const token: string = data.token;
-      this.tokenFromLogin.next(token);
+      let token: string = '';
+      token = data.token;
       this.isLogged.next(this.hasDigitInString(token));
       return token;
     })
@@ -103,7 +105,7 @@ export class AuthService {
             br++;
         }
     }
-    if(br > 0) {
+    if(br <= 0) {
       result = false;
     } else {
       result = true;
