@@ -14,12 +14,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    public translate: TranslateService) { }
+    public translate: TranslateService) {
+      // translate.addLangs(['en', 'sl', 'de']);
+      // translate.setDefaultLang('en');
+      // const browserLang = translate.getBrowserLang();
+      // translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+     }
 
   ngOnInit(): void {
     this.logSub = this.authService.isLogged.subscribe(loginRes => {
       this.isAuthenticated = loginRes;
     });
+  }
+
+  public selectLanguage(event: any) {
+    this.translate.use(event.target.value);
   }
 
   ngOnDestroy(): void {

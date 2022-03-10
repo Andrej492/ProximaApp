@@ -37,7 +37,7 @@
           ngModel
           required>
       </div>
-      <div *ngIf="signupForm.value.password !== signupForm.value.confirmPassword">Passwords do not match!</div>
+      <div *ngIf="signupForm.value.password !== signupForm.value.confirmPassword">{{ 'password_mismatch' | translate }}</div>
     <br>
     <button
       class="btn btn-primary"

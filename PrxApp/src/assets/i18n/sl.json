@@ -9,6 +9,7 @@
   "email": "E-pošta",
   "password": "Geslo",
   "confirm_password": "Potrdi geslo",
+  "password_mismatch": "Geslo se ne ujema!",
   "submit": "Pošlji",
   "list_of_users": "Seznam uporabnikov"
 }

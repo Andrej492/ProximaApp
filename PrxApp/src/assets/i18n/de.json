@@ -9,6 +9,7 @@
   "email": "Email",
   "password": "Passwort",
   "confirm_password": "Passwort bestätigen",
+  "password_mismatch": "Passwörter stimmen nicht überein!",
   "submit": "Absenden",
   "list_of_users": "Liste der Benutzer"
 }
