@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +16,10 @@ export class SignupComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean;
   logSub: Subscription
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    public translate: TranslateService) {}
 
   ngOnInit(): void {
     this.logSub = this.authService.isLogged.subscribe(res => this.isLoggedIn = res);

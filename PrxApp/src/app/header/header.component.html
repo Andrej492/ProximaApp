@@ -9,18 +9,25 @@
           *ngIf="isAuthenticated"
           class="nav-item"
           routerLinkActive="active">
-          <a class="nav-link active" data-toggle="tab" role="tab" routerLink="/home">Home</a>
+          <a class="nav-link active" data-toggle="tab" role="tab" routerLink="/home">{{ 'home' | translate }}</a>
         </li>
         <li
           *ngIf="!isAuthenticated"
           class="nav-item"
           routerLinkActive="active">
-          <a class="nav-link active" data-toggle="tab" role="tab" routerLink="/signin">SignIn</a></li>
+          <a
+            class="nav-link active"
+            style="margin-right: 10px;"
+            data-toggle="tab" role="tab"
+            routerLink="/signin">{{ 'sign_in' | translate }}</a></li>
         <li
           *ngIf="!isAuthenticated"
           class="nav-item"
           routerLinkActive="active">
-          <a class="nav-link active" data-toggle="tab" role="tab" routerLink="/signup">SignUp</a></li>
+          <a
+            class="nav-link active"
+            data-toggle="tab" role="tab"
+            routerLink="/signup">{{ 'sign_up' | translate }}</a></li>
       </ul>
     </div>
   </div>

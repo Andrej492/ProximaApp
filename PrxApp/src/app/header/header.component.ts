@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../user/auth.service';
@@ -11,7 +12,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   logSub: Subscription;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    public translate: TranslateService) { }
 
   ngOnInit(): void {
     this.logSub = this.authService.isLogged.subscribe(loginRes => {

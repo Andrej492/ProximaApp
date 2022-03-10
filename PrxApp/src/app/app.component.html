@@ -4,23 +4,12 @@
   <select
     (change)="selectLanguage($event)"
     class="language-picker">
-    <option value="en"> {{ 'language.english' | translate}} </option>
-    <option value="sl"> {{ 'language.slovenian' | translate}} </option>
-    <option value="de"> {{ 'language.german' | translate}} </option>
+    <option value="en"> {{ 'language.english' | translate }} </option>
+    <option value="sl"> {{ 'language.slovenian' | translate }} </option>
+    <option value="de"> {{ 'language.german' | translate }} </option>
   </select>
 </div>
 <!-- <div>{{ 'HELLO' | translate:param }}</div> -->
-<div class="content">
-  <h1>
-    {{ 'welcome_text' | translate }}
-  </h1>
-  <h3>
-    {{ 'title' | translate }}
-  </h3>
-  <button class="info">
-    {{ 'info' | translate }}
-  </button>
-</div>
 <div class="container">
   <div class="row">
     <div class="col-xs-12">

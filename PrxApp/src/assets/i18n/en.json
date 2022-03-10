@@ -1,9 +1,14 @@
 {
   "choose_language": "Choose language",
-  "info": "Show Info",
   "language.english": "English",
   "language.german": "German",
   "language.slovenian": "Slovenian",
-  "title": "Awesome translation!",
-  "welcome_text": "Welcome!"
+  "sign_in": "Sign In",
+  "sign_up": "Sign Up",
+  "home": "Home",
+  "email": "Email",
+  "password": "Password",
+  "confirm_password": "Confirm Password",
+  "submit": "Submit",
+  "list_of_users": "List of users"
 }

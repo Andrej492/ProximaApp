@@ -4,6 +4,7 @@
 <br>
 <div class="row">
   <div class="col-xs-12" *ngIf="users.length > 0 && !isLoading && hasLoadedToken">
+    <h3>{{ 'list_of_users' | translate }}</h3>
     <app-user-item
     *ngFor="let userItem of users; let i = index"
     [user]="userItem"

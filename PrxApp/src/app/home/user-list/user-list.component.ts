@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/user/auth.service';
@@ -18,7 +19,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   logSub: Subscription;
   hasLoadedToken: boolean;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+    public translate: TranslateService) { }
 
   ngOnInit(): void {
     this.tokenSub = this.authService.tokenFromLogin.subscribe((token: string) => {

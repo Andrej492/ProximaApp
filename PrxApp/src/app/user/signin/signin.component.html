@@ -5,7 +5,7 @@
       <div class="form-group">
         <label
           for="email"
-          class="control-label"> Email
+          class="control-label"> {{ 'email' | translate }}
         </label>
         <input
           type="email"
@@ -18,7 +18,7 @@
       <div class="form-group">
         <label
           for="password"
-          class="control-label">Password</label>
+          class="control-label">{{ 'password' | translate }}</label>
         <input
           type="text"
           class="form-control text-center"
@@ -31,7 +31,7 @@
       <button
         class="btn btn-primary"
         type="submit"
-        [disabled]="signinForm.invalid">Submit</button>
+        [disabled]="signinForm.invalid">{{ 'submit' | translate }}</button>
     </form>
   </div>
 </div>

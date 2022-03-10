@@ -1,9 +1,14 @@
 {
   "choose_language": "Izberi jezik",
-  "info": "Pokaži informacije",
   "language.english": "Angleščina",
   "language.german": "Nemščina",
   "language.slovenian": "Slovenski",
-  "title": "Odličen prevod!",
-  "welcome_text": "Dobrodošli!"
+  "sign_in": "Prijava",
+  "sign_up": "Prijavi se",
+  "home": "Dom",
+  "email": "E-pošta",
+  "password": "Geslo",
+  "confirm_password": "Potrdi geslo",
+  "submit": "Pošlji",
+  "list_of_users": "Seznam uporabnikov"
 }
