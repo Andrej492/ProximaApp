@@ -9,9 +9,12 @@ import {TranslateService} from '@ngx-translate/core';
 export class AppComponent {
   param = {value: 'world'};
 
-  constructor(translate: TranslateService) {
+  constructor(public translate: TranslateService) {
+    translate.addLangs(['en', 'sl', 'de']);
     translate.setDefaultLang('en');
+  }
 
-    translate.use('en');
+  public selectLanguage(event: any) {
+    this.translate.use(event.target.value);
   }
 }
